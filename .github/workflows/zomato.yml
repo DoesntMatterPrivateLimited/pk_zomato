@@ -24,3 +24,4 @@ jobs:
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} //Sonar Token generated 
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }} 
+        projectKey: "zomato"
