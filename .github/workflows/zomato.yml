@@ -31,4 +31,4 @@ jobs:
         chmod +x dependency-check/bin/dependency-check.sh
     - name: Run Dependency-Check
       run: |
-        ./dependency-check/bin/dependency-check.sh --scan ./ --format HTML --project "Your_Project_Name" --out owasp-report
+        ./dependency-check/bin/dependency-check.sh --scan ./ --format HTML --project "zomato_clone" --out owasp-report
