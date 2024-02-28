@@ -24,11 +24,10 @@ jobs:
       with:
         host: ${{ secrets.SONAR_HOST_URL }}
         login: ${{ secrets.SONAR_TOKEN }}
-    - name: Download Dependency-Check CLI
-      run: |
-        curl -LO https://dl.bintray.com/jeremy-long/owasp/dependency-check-7.0.0-release.zip
-        unzip dependency-check-7.0.0-release.zip -d dependency-check
-        chmod +x dependency-check/bin/dependency-check.sh
-    - name: Run Dependency-Check
-      run: |
-        ./dependency-check/bin/dependency-check.sh --scan ./ --format HTML --project "zomato_clone" --out owasp-report
+    - name: Depcheck
+      uses: dependency-check/Dependency-Check_Action@main
+      id: Depcheck
+      with:
+          project: 'zomato-clone'
+          path: '.'
+          format: 'HTML'
