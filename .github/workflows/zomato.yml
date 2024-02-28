@@ -31,3 +31,8 @@ jobs:
           project: 'zomato-clone'
           path: '.'
           format: 'HTML'
+    - name: Upload Test results
+      uses: actions/upload-artifact@master
+      with:
+           name: Depcheck report
+           path: ${{github.workspace}}/reports     
