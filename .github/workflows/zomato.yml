@@ -36,3 +36,10 @@ jobs:
       with:
            name: Depcheck report
            path: ${{github.workspace}}/reports     
+    - name: Set up Docker
+      uses: actions/setup-docker@v2
+
+    - name: Run Trivy FS Scan
+      run: |
+        docker pull aquasec/trivy
+        docker run -v $(pwd):/workspace aquasec/trivy fs . > trivyfs.txt
