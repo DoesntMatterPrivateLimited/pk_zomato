@@ -48,7 +48,7 @@ jobs:
         docker pull aquasec/trivy
         docker run -v $(pwd):/workspace aquasec/trivy fs . > trivyfs.txt
     - name: Set up Docker
-      uses: docker/setup-docker@v2
+      uses: docker/setup-buildx-action@v3
       with:
         dockerfile: Dockerfile  # Specify the path to your Dockerfile if it's not in the root directory
         context: .
