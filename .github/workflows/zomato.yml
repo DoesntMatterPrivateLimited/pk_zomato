@@ -61,4 +61,4 @@ jobs:
         docker build -t zomato .
         docker tag zomato $DOCKER_USERNAME/zomato:latest
         docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-        docker push $DOCKER_USERNAME/zomato:latest    
+        docker push $DOCKER_USERNAME/zomato:latest
