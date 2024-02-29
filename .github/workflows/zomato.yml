@@ -55,7 +55,7 @@ jobs:
 
     - name: Docker Build & Push
       run: |
-        echo "::set-env name=DOCKER_USERNAME::hackerboypk"  # Replace with your Docker Hub username
+        echo "::set-env name=DOCKER_USERNAME::kaustubhdevops"  # Replace with your Docker Hub username
         echo "::set-env name=DOCKER_PASSWORD::${{ secrets.DOCKER_PASSWORD }}"  # Set DOCKER_PASSWORD as a secret in your GitHub repository
 
         docker build -t zomato .
