@@ -68,15 +68,16 @@ jobs:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: zomato-ecr
           IMAGE_TAG: ${{ steps.increment_tag.outputs.tag }}
-    #   run: |
-    #       docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
-    #       docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG  
+      run: |
+            docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+            docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+          
     
 
-    - name: Build and Push Docker Image
-      run: |
-           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
-           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+    # - name: Build and Push Docker Image
+    #   run: |
+    #        docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+    #        docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
           
     
       
