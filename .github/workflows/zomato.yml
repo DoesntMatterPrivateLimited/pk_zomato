@@ -1,4 +1,8 @@
 name: zomato
+env:
+  DOCKER_USER: ${{secrets.DOCKER_USERNAME}}
+  DOCKER_PASSWORD: ${{secrets.DOCKERHUB_PASSWORD}}
+  REPO_NAME: ${{secrets.REPO_NAME}}
 on: 
   push:
     branches: [ "main" ]
@@ -47,11 +51,13 @@ jobs:
     #   run: |
     #     docker pull aquasec/trivy
     #     docker run -v $(pwd):/workspace aquasec/trivy fs . > trivyfs.txt
+    - name: docker login
+      run: | # log into docker hub account
+          docker login -u $DOCKER_USERNAME -p $DOCKERHUB_PASSWORD  
+   
+    - name: Build the Docker image # push The image to the docker hub
+      run: docker build . --file Dockerfile --tag $DOCKER_USERNAME/$REPO_NAME:1
+    - name: Docker Push
+      run: docker push $DOCKER_USERNAME/$REPO_NAME:1
 
-
-    - name: Build and push
-       
-      run: |
-        echo "${{ secrets.DOCKERPASSWORD }}" | docker login -u "kaustubhdevops" --password-stdin
-        docker image build -t kaustubhdevops/zomato:latest .
-        docker push kaustubhdevops/zomato:latest
+    
