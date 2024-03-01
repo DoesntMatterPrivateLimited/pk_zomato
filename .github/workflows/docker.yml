@@ -31,10 +31,11 @@ jobs:
             password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: push the docker image to docker hub
-      uses: docker/build-push-action@v4
+      uses: docker/build-push-action@v5
       with:
-         context: .
-         dockerfile: Dockerfile
+         # context: .
+         # dockerfile: Dockerfile
          push: true
-         tags: ${{ secrets.DOCKER_USERNAME }}
+         tags: kaustubhdevops/zomato:latest                       
+         
 
