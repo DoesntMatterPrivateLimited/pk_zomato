@@ -71,8 +71,9 @@ jobs:
       run: echo "::set-output name=tag::$(expr ${{ RELEASE_TAG }} + 1)"
 
     - name: Build and Push Docker Image
-      run: |
+      
           IMAGE_TAG=${{ steps.increment_tag.outputs.tag }}
+      run: |
            docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
            docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
           
