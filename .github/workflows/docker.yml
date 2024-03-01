@@ -1,1 +1,27 @@
+name: zomato
+env:
+  DOCKER_USER: ${{secrets.DOCKER_USERNAME}}
+  DOCKER_PASSWORD: ${{secrets.DOCKERHUB_PASSWORD}}
+  REPO_NAME: ${{secrets.REPO_NAME}}
+on: 
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code 
+      uses: actions/checkout@v4
+      
+    
+    - name: docker login
+      run: | # log into docker hub account
+          docker login -u $DOCKER_USERNAME -p $DOCKERHUB_PASSWORD  
+   
+    - name: Build the Docker image # push The image to the docker hub
+      run: docker build . --file Dockerfile --tag $DOCKER_USERNAME/$REPO_NAME:1
+    - name: Docker Push
+      run: docker push $DOCKER_USERNAME/$REPO_NAME:1
