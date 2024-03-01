@@ -58,21 +58,22 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v2
 
-    - name: Build, tag, and push docker image to Amazon ECR
-      env:
-          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: zomato-ecr
-    #       IMAGE_TAG: ${{ github.sha }}
-    #   run: |
-    #       docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
-    #       docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG  
     - name: Increment and Get Tag
       id: increment_tag
       run: echo "::set-output name=tag::$(expr ${{ RELEASE_TAG }} + 1)"
 
-    - name: Build and Push Docker Image
       
-          IMAGE_TAG=${{ steps.increment_tag.outputs.tag }}
+    - name: Build, tag, and push docker image to Amazon ECR
+      env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY: zomato-ecr
+          IMAGE_TAG: ${{ steps.increment_tag.outputs.tag }}
+    #   run: |
+    #       docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+    #       docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG  
+    
+
+    - name: Build and Push Docker Image
       run: |
            docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
            docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
