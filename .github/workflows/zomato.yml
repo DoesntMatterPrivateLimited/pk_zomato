@@ -48,15 +48,10 @@ jobs:
     #     docker pull aquasec/trivy
     #     docker run -v $(pwd):/workspace aquasec/trivy fs . > trivyfs.txt
 
-    - name: Login to Docker Hub
-      uses: docker/login-action@v3
-      with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Build and push
-      uses: docker/build-push-action@v5
-      with:
-          push: true
-          tags: kaustubhdevops/zomato:latest
-
+       
+      run: |
+        echo "${{ secrets.DOCKERPASSWORD }}" | docker login -u "kaustubhdevops" --password-stdin
+        docker image build -t kaustubhdevops/zomato:latest .
+        docker push kaustubhdevops/zomato:latest
