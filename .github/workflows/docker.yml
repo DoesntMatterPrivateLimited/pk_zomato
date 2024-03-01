@@ -12,7 +12,9 @@ jobs:
     steps:
     - name: Checkout code 
       uses: actions/checkout@v4
-      
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v4
     
     - name: build the docker image
       uses: docker/build-push-action@v4
