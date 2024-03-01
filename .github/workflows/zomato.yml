@@ -60,7 +60,7 @@ jobs:
 
     - name: Increment and Get Tag
       id: increment_tag
-      run: echo "::set-output name=tag::$(expr ${{ RELEASE_TAG }} + 1)"
+      run: echo "::set-output name=tag::$(expr ${{ github.run_number }} + 1)"
 
       
     - name: Build, tag, and push docker image to Amazon ECR
