@@ -15,8 +15,8 @@ spec:
         app: zomato-on-k8s
     spec:
       containers:
-      - name: zomato-ecr
-        image: 992382367971.dkr.ecr.eu-north-1.amazonaws.com/zomato-ecr:85
+      - name: zomato-kg-ecr
+        image: 992382367971.dkr.ecr.us-west-1.amazonaws.com/zomato-kg-ecr:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
