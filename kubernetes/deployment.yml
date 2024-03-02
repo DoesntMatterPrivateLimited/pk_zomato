@@ -1,1 +1,22 @@
-
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: Zomato-on-k8s-deployment
+  labels:
+    app: Zomato-on-k8s
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: Zomato-on-k8s
+  template:
+    metadata:
+      labels:
+        app: Zomato-on-k8s
+    spec:
+      containers:
+      - name: zomato-ecr
+        image: 992382367971.dkr.ecr.eu-north-1.amazonaws.com/zomato-ecr:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
