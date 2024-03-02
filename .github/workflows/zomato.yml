@@ -83,10 +83,10 @@ jobs:
     #      args: test         
     #   env:        
     #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-    # - name: Update kube config 
-    #   run: aws eks update-kubeconfig --name zomato-ekscluster
+    - name: Update kube config 
+      run: aws eks update-kubeconfig --name pk
 
-    # - name: Deploy to eks
-    #   run: |
-    #     kubectl apply -f deployment.yml
-    #     kubectl apply -f service.yml
+    - name: Deploy to eks
+      run: |
+        kubectl apply -f deployment.yml
+        kubectl apply -f service.yml
