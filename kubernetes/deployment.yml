@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: zomato-ecr
-        image: 992382367971.dkr.ecr.eu-north-1.amazonaws.com/zomato-ecr:latest
+        image: 992382367971.dkr.ecr.eu-north-1.amazonaws.com/zomato-ecr:85
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
