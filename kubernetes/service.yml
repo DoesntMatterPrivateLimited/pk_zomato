@@ -3,10 +3,11 @@ kind: Service
 metadata:
   name: zomato-k8s-service
 spec:
-  type: NodePort
+  type: LoadBalancer 
   selector:
     app: zomato-on-k8s
   ports:
     - protocol: 'TCP'
       port: 3000  
       targetPort: 3000
+     
