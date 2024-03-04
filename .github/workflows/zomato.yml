@@ -71,7 +71,7 @@ jobs:
     - name: Build, tag, and push docker image to Amazon ECR
       env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: zomato-kg-ecr
+          REPOSITORY: zomato-ecr
           IMAGE_TAG: latest
       run: |
             docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
