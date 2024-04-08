@@ -1,6 +1,6 @@
 {
-  "applicationName": "AppECS-zomato-zm-svc",
-  "deploymentGroupName": "DgpECS-zomato-zm-svc",
+  "applicationName": "AppECS-zomato-zm-svc1",
+  "deploymentGroupName": "DgpECS-zomato-zm-svc1",
   "revision": {
     "revisionType": "AppSpecContent",
     "appSpecContent": {
