@@ -4,7 +4,7 @@
   "revision": {
     "revisionType": "AppSpecContent",
     "appSpecContent": {
-      "content": "{\"version\":1,\"Resources\":[{\"TargetService\":{\"Type\":\"AWS::ECS::Service\",\"Properties\":{\"TaskDefinition\":\"TASK_DEF_ARN\",\"LoadBalancerInfo\":{\"ContainerName\":\"zomato\",\"ContainerPort\":3000},\"CapacityProviderStrategy\":[{\"CapacityProvider\":\"Infra-ECS-Cluster-zomato-d6cf012e-ECSAutoScalingGroup-gTJwfxWzVXFp\",\"Base\":0,\"Weight\":1}]}}}]}"
+      "content": "{\"version\":1,\"Resources\":[{\"TargetService\":{\"Type\":\"AWS::ECS::Service\",\"Properties\":{\"TaskDefinition\":\"TASK_DEF_ARN\",\"LoadBalancerInfo\":{\"ContainerName\":\"zomato\",\"ContainerPort\":3000},\"CapacityProviderStrategy\":[{\"CapacityProvider\":\"Infra-ECS-Cluster-zomato-d6cf012e-EC2CapacityProvider-1QN8PBK86T3I\",\"Base\":0,\"Weight\":1}]}}}]}"
     }
   }
 }
