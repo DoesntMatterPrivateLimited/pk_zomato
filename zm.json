@@ -1,24 +1,24 @@
 {
-        "family": "zomatotd",
-        "networkMode": "awsvpc",
-        "taskRoleArn": "arn:aws:iam::590183663006:role/ecsTaskExecutionRole", 
-        "containerDefinitions": [
-            {
-                "name": "zomato",
-                "image": "590183663006.dkr.ecr.ap-south-2.amazonaws.com/zomato:latest",
-                "portMappings": [
-                    {
-                        "containerPort": 3000,
-                        "hostPort": 0,
-                        "protocol": "tcp"
-                    }
-                ],
-                "essential": true,
-            }
-        ],
-        "requiresCompatibilities": [
-            "FARGATE"
-        ],
-        "cpu": "1024",
-        "memory": "1024"
+    "family": "zomatotd",
+    "networkMode": "awsvpc",
+    "taskRoleArn": "arn:aws:iam::590183663006:role/ecsTaskExecutionRole",
+    "containerDefinitions": [
+        {
+            "name": "zomato",
+            "image": "590183663006.dkr.ecr.ap-south-2.amazonaws.com/zomato:latest",
+            "portMappings": [
+                {
+                    "containerPort": 3000,
+                    "hostPort": 0,
+                    "protocol": "tcp"
+                }
+            ],
+            "essential": true
+        }
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "1024",
+    "memory": "1024"
 }
