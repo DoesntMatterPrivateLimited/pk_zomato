@@ -4,7 +4,7 @@
   "revision": {
     "revisionType": "AppSpecContent",
     "appSpecContent": {
-      "content": "{\"version\":1,\"Resources\":[{\"TargetService\":{\"Type\":\"AWS::ECS::Service\",\"Properties\":{\"TaskDefinition\":\"TASK_DEF_ARN\",\"LoadBalancerInfo\":{\"ContainerName\":\"httpd\",\"ContainerPort\":80},\"CapacityProviderStrategy\":[{\"CapacityProvider\":\"httpd-cap\",\"Base\":0,\"Weight\":1}]}}}]}"
+      "content": "{\"version\":1,\"Resources\":[{\"TargetService\":{\"Type\":\"AWS::ECS::Service\",\"Properties\":{\"TaskDefinition\":\"TASK_DEF_ARN\",\"LoadBalancerInfo\":{\"ContainerName\":\"zomato\",\"ContainerPort\":80},\"CapacityProviderStrategy\":[{\"CapacityProvider\":\"httpd-cap\",\"Base\":0,\"Weight\":1}]}}}]}"
     }
   }
 }
