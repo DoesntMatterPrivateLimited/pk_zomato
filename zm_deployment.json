@@ -1,10 +1,10 @@
 {
-  "applicationName": "AppECS-zomato-zm-svc1",
-  "deploymentGroupName": "DgpECS-zomato-zm-svc1",
+  "applicationName": "AppECS-zomato-prod-zomato-svc",
+  "deploymentGroupName": "DgpECS-zomato-prod-zomato-svc",
   "revision": {
     "revisionType": "AppSpecContent",
     "appSpecContent": {
-      "content": "{\"version\":1,\"Resources\":[{\"TargetService\":{\"Type\":\"AWS::ECS::Service\",\"Properties\":{\"TaskDefinition\":\"TASK_DEF_ARN\",\"LoadBalancerInfo\":{\"ContainerName\":\"zomato\",\"ContainerPort\":3000},\"CapacityProviderStrategy\":[{\"CapacityProvider\":\"Infra-ECS-Cluster-zomato-d6cf012e-EC2CapacityProvider-1QN8PBK86T3I\",\"Base\":0,\"Weight\":1}]}}}]}"
+      "content": "{\"version\":1,\"Resources\":[{\"TargetService\":{\"Type\":\"AWS::ECS::Service\",\"Properties\":{\"TaskDefinition\":\"TASK_DEF_ARN\",\"LoadBalancerInfo\":{\"ContainerName\":\"httpd\",\"ContainerPort\":80},\"CapacityProviderStrategy\":[{\"CapacityProvider\":\"httpd-cap\",\"Base\":0,\"Weight\":1}]}}}]}"
     }
   }
 }
