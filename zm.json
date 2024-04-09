@@ -19,8 +19,6 @@
     "requiresCompatibilities": [
         "FARGATE"
     ],
-    "networkMode": "awsvpc",
-    "family": "zomatotd",
     "cpu": "512",
     "memory": "1024"
 }
