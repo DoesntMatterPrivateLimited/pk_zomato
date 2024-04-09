@@ -1,7 +1,7 @@
 {
     "family": "zomatotd",
     "networkMode": "awsvpc",
-    "taskRoleArn": "arn:aws:iam::590183663006:role/ecsTaskExecutionRole",
+    "executionRoleArn": "arn:aws:iam::590183663006:role/ecsTaskExecutionRole",
     "containerDefinitions": [
         {
             "name": "zomato",
