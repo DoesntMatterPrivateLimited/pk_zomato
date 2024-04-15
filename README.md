@@ -87,7 +87,7 @@ stage('SonarQube analysis') {
 }
 
 ````
-## $\color{blue}{Step-4: Install \ Trivy:}$
+## $\color{green}{Step-4: Install \ Trivy:}$
 
 ````
 sudo apt-get install wget apt-transport-https gnupg lsb-release
