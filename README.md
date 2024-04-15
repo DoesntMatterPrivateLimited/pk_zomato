@@ -2,7 +2,7 @@
 
  
 
-### $\color{yellow}{Tech / Stack :}$
+### $\color{pink}{Tech / Stack :}$
 
 - Javascript
 - AWS
