@@ -17,7 +17,7 @@
 ## $\color{lightblue}{Create \ Ubuntu \ VM \ using \ AWS \ EC2}$
 
 
-## $\color{yellow}{Step-1 : Jenkins \ Server \ Setup}$
+## $\color{green}{Step-1 : Jenkins \ Server \ Setup}$
 
 - Install Java & Jenkins using below commands
 ````
@@ -45,13 +45,13 @@ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 
 - Create Admin Account & Install Required Plugins in Jenkins
 
-## $\color{yellow}{Step-2 : Install \ NodeJs}$
+## $\color{green}{Step-2 : Install \ NodeJs}$
 
 ````
 sudo apt install nodejs
 ````
 
-## $\color{yellow}{Step-3 : Run \ Sonar \ Using \ Docker}$
+## $\color{green}{Step-3 : Run \ Sonar \ Using \ Docker}$
 
 ````
 docker run -d --name sonarqube -p 9000:9000 sonarqube:lts-community
@@ -87,7 +87,7 @@ stage('SonarQube analysis') {
 }
 
 ````
-## $\color{yellow}{Step-4: Install \ Trivy:}$
+## $\color{blue}{Step-4: Install \ Trivy:}$
 
 ````
 sudo apt-get install wget apt-transport-https gnupg lsb-release
@@ -110,7 +110,7 @@ stage('TRIVY FS SCAN') {
 trivy image <imageid>
 ````
 
-## $\color{yellow}{Step-4: \ Install \ Dependency-Check \ Plugin}$
+## $\color{green}{Step-4: \ Install \ Dependency-Check \ Plugin}$
 
 - Go to "Dashboard" in your Jenkins web interface.
 
@@ -147,7 +147,7 @@ stage('Install Dependencies') {
              }
          }
 ````
-## $\color{yellow}{Step-6 : Setup \ ECR}$
+## $\color{green}{Step-6 : Setup \ ECR}$
 
 - Go to plugin=AWS credentials,
 - Amazon ECR plugin
@@ -213,7 +213,7 @@ stage('ecr image push') {
                 }
             }
 ````
-## $\color{yellow}{Step-7: \ load \ Balancer}$
+## $\color{green}{Step-7: \ load \ Balancer}$
 ````
 stage('load balancer') {
             steps {
@@ -229,7 +229,7 @@ stage('load balancer') {
             '''
 ````
 
-## $\color{yellow}{Step-8: \ Create \ ECS \ Cluster}$
+## $\color{green}{Step-8: \ Create \ ECS \ Cluster}$
 
 
 1. Create a Cluster: Use the create-cluster command to create a new ECS cluster. You'll need to specify the cluster name and optionally the cluster configuration.
