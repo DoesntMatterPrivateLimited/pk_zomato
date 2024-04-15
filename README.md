@@ -1,71 +1,282 @@
-# Getting Started with Create React App
+# $${\color{blue}Project : \color{red} Project-Zomato-App}$$ 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+ 
 
-## Available Scripts
+### $\color{yellow}{Tech / Stack :}$
 
-In the project directory, you can run:
+- Javascript
+- AWS
+- Docker
+- Jenkins
+- Trivi
+- Owasp
+- ECR
+- ECS
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## $\color{lightblue}{Create \ Ubuntu \ VM \ using \ AWS \ EC2}$
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+## $\color{yellow}{Step-1 : Jenkins \ Server \ Setup}$
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Install Java & Jenkins using below commands
+````
+sudo apt-get update
 
-### `npm run build`
+sudo apt-get install default-jdk17
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+sudo apt-get update
 
-### `npm run eject`
+sudo apt-get install jenkins
+sudo systemctl start jenkins
+sudo systemctl enable jenkins
+sudo systemctl status jenkins
+````
+- Copy jenkins admin password
+````
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword       
+````
+- Open jenkins server in browser using VM public ip
+ $\color{blue}{http://public-ip:8080/}$                   
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Create Admin Account & Install Required Plugins in Jenkins
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## $\color{yellow}{Step-2 : Install \ NodeJs}$
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+````
+sudo apt install nodejs
+````
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## $\color{yellow}{Step-3 : Run \ Sonar \ Using \ Docker}$
 
-## Learn More
+````
+docker run -d --name sonarqube -p 9000:9000 sonarqube:lts-community
+````
+- Enable 9000 port number in security group
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Login into Sonar Server & Generate Sonar Token 
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Go to credentials Add Sonar Token in 'Jenkins Credentials' as Secret Text
 
-### Code Splitting
+ - Manager Jenkins 
+ - Credentials 
+ - Add Credentials 
+ - Select Secret text
+ - Enter Sonar Token as secret text 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Go To  Manage Jenkins -> Plugins -> Available -> Sonar Qube Scanner Plugin -> Install it
 
-### Analyzing the Bundle Size
+- Go To Manage Jenkins -> Configure System -> Sonar Qube Servers -> Add Sonar Qube Server 
+		
+ 1. Name : Sonar-Server
+ 2. Server URL : http://52.66.247.11:9000/   (Give your sonar server url here)
+ 3. Add Sonar Server Token			
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- Once above steps are completed, then add below stage in the pipeline
+````
+stage('SonarQube analysis') {
+			withSonarQubeEnv('sonar-9.9.3') {
+			def mavenHome = tool name: "Maven-3.9.6", type: "maven"
+			def mavenCMD = "${mavenHome}/bin/mvn"
+			sh "${mavenCMD} sonar:sonar"
+    	}
+}
 
-### Making a Progressive Web App
+````
+## $\color{yellow}{Step-4: Install \ Trivy:}$
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+````
+sudo apt-get install wget apt-transport-https gnupg lsb-release
+wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
+sudo apt-get update
+sudo apt-get install trivy  
+````
+- Create Trivi Scan Stage in Pipeline
+````
+stage('TRIVY FS SCAN') {
+            steps {
+                sh "trivy fs . > trivyfs.txt"
+            }
+        }
+   
+````
+- To scan image using trivy
+```` 
+trivy image <imageid>
+````
 
-### Advanced Configuration
+## $\color{yellow}{Step-4: \ Install \ Dependency-Check \ Plugin}$
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- Go to "Dashboard" in your Jenkins web interface.
 
-### Deployment
+- Navigate to "Manage Jenkins" → "Manage Plugins."
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- Click on the "Available" tab and search for "OWASP Dependency-Check."
 
-### `npm run build` fails to minify
+- Check the checkbox for "OWASP Dependency-Check" and click on the "Install without restart" button.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# Zomato-Clone
+- Configure Dependency-Check Tool:
+
+- After installing the Dependency-Check plugin, you need to configure the tool.
+
+
+- Go to "Dashboard" → "Manage Jenkins" → "Global Tool Configuration."
+
+- Find the section for "OWASP Dependency-Check."
+
+- Add the tool's name, e.g., "DP-Check."
+
+- Save your settings.
+
+````
+stage('Install Dependencies') {
+            steps {
+                sh "npm install"
+            }
+        }
+
+        stage('OWASP FS SCAN') {
+             steps {
+                 dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'DP-Check'
+                 dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+             }
+         }
+````
+## $\color{yellow}{Step-6 : Setup \ ECR}$
+
+- Go to plugin=AWS credentials,
+- Amazon ECR plugin
+
+1. create credentials and add AWS  credentials 
+  Install and Configure the AWS CLI:
+  If you haven't already, install the AWS CLI and configure it with your AWS access key ID, secret access key, default region, etc. You can do this by running:
+
+````
+aws configure
+````
+2. Create an ECR Repository:
+   Use the create-repository command to create a new repository in ECR. You need to specify a name for the repository.
+
+$ aws ecr create-repository --repository-name your-repo-name
+
+3. (Optional) Set Permissions:
+By default, the repository will be private. If you want to grant permissions to other AWS accounts or IAM users, you can create a policy and attach it to the repository. For example:
+
+$ aws ecr set-repository-policy --repository-name your-repo-name --policy-text file://ecr-policy.json
+
+  Replace 'ecr-policy.json' with the path to a JSON file containing your policy.
+
+4. Authenticate Docker Client with ECR:
+   Before you can push Docker images to your ECR repository, you need to authenticate your Docker client with the ECR registry. You can do this using the get-login-password command to       retrieve an authentication token and then use it to log in to Docker.
+````
+aws ecr get-login-password --region your-region | docker login --username AWS --password-stdin your-account-id.dkr.ecr.your-region.amazonaws.com
+````
+  Replace 'your-region' with your AWS region (e.g., 'us-east-1') and 'your-account-id' with your AWS account ID.
+
+5. Push Docker Images to ECR:
+   Build your Docker image locally and then tag it with the URI of your ECR repository.
+````
+ docker build -t your-repo-name .
+
+docker tag your-repo-name:latest your-account-id.dkr.ecr.your-region.amazonaws.com/your-repo-name:latest
+
+docker push your-account-id.dkr.ecr.your-region.amazonaws.com/your-repo-name:latest
+````
+Replace 'your-repo-name', 'your-account-id', and 'your-region' with appropriate values.
+
+````
+stage('ecr login') {
+            steps {
+                script {
+                    docker.withRegistry('https://590183663006.dkr.ecr.ap-south-2.amazonaws.com', 'ecr:ap-south-2:awscreds') {
+                        // Inside this block, you can perform Docker-related operations
+                    }
+                }
+            }
+        }
+
+stage('ecr image push') {
+            steps {
+                script {
+                    
+                    docker.withRegistry ('https://590183663006.dkr.ecr.ap-south-2.amazonaws.com', 'ecr:ap-south-2:awscreds'){
+                    docker.image('zomato:latest').push('latest')
+                        
+                    }
+                    
+                    }
+                }
+            }
+````
+## $\color{yellow}{Step-7: \ load \ Balancer}$
+````
+stage('load balancer') {
+            steps {
+                
+            withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'awscreds', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+                    sh '''
+                    aws elbv2 create-target-group --name tg1 --protocol HTTP --port 80 --vpc-id vpc-0e3a99ba27ae8a71c --target-type ip --ip-address-type ipv4
+                    aws elbv2 create-load-balancer --name zomato --subnets subnet-0abfaaa33ce7d7693 subnet-09e4560f5b398c7cb --security-groups sg-072b3bbafdb2ad46e
+                    aws elbv2 create-listener --load-balancer-arn arn:aws:elasticloadbalancing:ap-south-2:590183663006:loadbalancer/app/zomato/b41cc28a96a6bf57 --protocol HTTP --port
+                    80 --default-actions Type=forward,TargetGroupArn=arn:aws:elasticloadbalancing:ap-south-2:590183663006:targetgroup/tg1/062e93db68af4803
+
+                    
+            '''
+````
+
+## $\color{yellow}{Step-8: \ Create \ ECS \ Cluster}$
+
+
+1. Create a Cluster: Use the create-cluster command to create a new ECS cluster. You'll need to specify the cluster name and optionally the cluster configuration.
+
+2. Configure Task Definition: Define your task definition, which describes how your containers should be launched and run. You can do this using the register-task-definition command.
+
+3. Create a Service: Use the create-service command to create a service within your ECS cluster. The service manages the desired number of tasks and maintains the specified number of           	running copies of your task definition.
+````
+ stage('ecs') {
+            steps {
+                withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'awscreds', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+                sh '''
+                    aws ecs create-cluster --cluster-name zomato
+                    aws ecs register-task-definition --cli-input-json file://./zm.json --region ap-south-2
+                    '''
+}
+               
+            }
+            
+        }
+        stage('Deploy ECS Service') {
+            steps {
+                script{
+                withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'awscreds', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]){
+                    def clusterName = 'zomato'
+                    def serviceName = 'zservice'
+                    def taskDefinition = 'zomatotd:2'
+                    def desiredCount = 1
+                    def launchType = 'FARGATE'
+                    def platformVersion = 'LATEST'
+                    def subnets = 'subnet-0abfaaa33ce7d7693'
+                    def securityGroups = 'sg-072b3bbafdb2ad46e'
+                    def loadBalancerJson = "{\"targetGroupArn\": \"arn:aws:elasticloadbalancing:ap-south-2:590183663006:targetgroup/tg1/062e93db68af4803\", \"containerName\": 
+                   \"zomato\", \"containerPort\": 3000}"
+
+                    sh "aws ecs create-service --cluster ${clusterName} --service-name ${serviceName} --task-definition ${taskDefinition} --desired-count ${desiredCount} --launch-type 
+                    ${launchType} --platform-version ${platformVersion} --load-balancers '${loadBalancerJson}' --network-configuration 'awsvpcConfiguration={subnets= 
+                   [${subnets}],securityGroups=[${securityGroups}],assignPublicIp=ENABLED}'"
+                    // sh "aws ecs create-service --cluster ${clusterName} --service-name ${serviceName} --task-definition ${taskDefinition} --desired-count ${desiredCount} --launch- 
+                    type ${launchType} --platform-version ${platformVersion} --load-balancers [{\"targetGroupArn\": \"arn:aws:elasticloadbalancing:ap-south- 
+                    2:590183663006:targetgroup/tg1/9a198ac210c109cb\", \"containerName\": \"zomato\", \"containerPort\": 80}] --network-configuration 'awsvpcConfiguration={subnets= 
+                   [${subnets}],securityGroups=[${securityGroups}],assignPublicIp=ENABLED}'"
+                }
+                }
+            }
+        }
+
+
+````
+
