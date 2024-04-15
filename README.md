@@ -2,7 +2,7 @@
 
  
 
-### $\color{pink}{Tech / Stack :}$
+### $\color{blue}{Tech / Stack :}$
 
 - Javascript
 - AWS
@@ -14,7 +14,7 @@
 - ECS
 
 
-## $\color{lightblue}{Create \ Ubuntu \ VM \ using \ AWS \ EC2}$
+## $\color{blue}{Create \ Ubuntu \ VM \ using \ AWS \ EC2}$
 
 
 ## $\color{green}{Step-1 : Jenkins \ Server \ Setup}$
