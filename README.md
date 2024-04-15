@@ -156,6 +156,8 @@ stage('Install Dependencies') {
   Install and Configure the AWS CLI:
   If you haven't already, install the AWS CLI and configure it with your AWS access key ID, secret access key, default region, etc. You can do this by running:
 
+ ![image](https://github.com/DoesntMatterPrivateLimited/pk_zomato/assets/122669982/ae63c145-6249-4f77-8092-c6cc1dd5ba08)
+ 
 ````
 aws configure
 ````
