@@ -192,28 +192,36 @@ docker push your-account-id.dkr.ecr.your-region.amazonaws.com/your-repo-name:lat
 Replace 'your-repo-name', 'your-account-id', and 'your-region' with appropriate values.
 
 ````
-stage('ecr login') {
-            steps {
-                script {
-                    docker.withRegistry('https://590183663006.dkr.ecr.ap-south-2.amazonaws.com', 'ecr:ap-south-2:awscreds') {
-                        // Inside this block, you can perform Docker-related operations
-                    }
-                }
+stage('Logging into AWS ECR') {
+           steps {
+           script {
+              sh "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 992382496367.dkr.ecr.ap-				south1.amazonaws.com"
             }
-        }
+ 
+	}
+}
+             
+             stage('Building image') {
+                steps{
+                script {
+                     dockerImage = docker.build "ecr:latest"
+                     }
+                    }
+                 }
+                 
+                stage('Pushing to ECR') {
+                    steps{ 
+                     script {
+                             sh "docker tag ecr:latest 992382496367.dkr.ecr.ap-south-1.amazonaws.com/ecr:latest"
+                             sh "docker push 992382496367.dkr.ecr.ap-south-1.amazonaws.com/ecr:latest"
+                             }
+                            }
+                        }
 
-stage('ecr image push') {
-            steps {
-                script {
-                    
-                    docker.withRegistry ('https://590183663006.dkr.ecr.ap-south-2.amazonaws.com', 'ecr:ap-south-2:awscreds'){
-                    docker.image('zomato:latest').push('latest')
-                        
-                    }
-                    
-                    }
-                }
-            }
+
+        
+
+
 ````
 ## $\color{green}{Step-7: \ load \ Balancer}$
 ````
