@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: zomato-on-k8s-deployment
-  namespace: zomato
   labels:
     app: zomato-on-k8s
 spec:
